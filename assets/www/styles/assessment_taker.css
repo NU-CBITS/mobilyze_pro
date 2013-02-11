@@ -1,0 +1,376 @@
+.ui-slider-handle, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+  background: #555555;
+}
+a.ui-slider-handle:hover {
+  background: #2d2d2d;
+}
+
+h1,h2,h3,h4,h5,h6 { margin:0; }
+  
+body {  
+  
+  min-height:540px;
+  margin:0; 
+  padding:0; 
+
+  text-align:center;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size:1.2em;
+  
+  /*color: white;*/
+  color:#555;
+  /*background-color:#F2F2F2;*/
+  background: url('../container-bg.jpg') repeat;
+
+}
+
+body[orient="portrait"] { 
+  min-height:540px; 
+}
+
+body[orient="landscape"] { 
+  min-height:400px; 
+}
+
+h1 {
+  display:block;
+  
+  padding-bottom:5px;
+  padding-top:5px;
+  margin:0px;
+  font-size: 19px;
+  text-align:center; 
+
+  /*font-size: 24px;*/
+  font-weight: 200;
+  letter-spacing:2px;
+  /*background-color:#1e6666;*/
+
+/*  font-size: 48px;
+  line-height: 48px;*/
+  border: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  color: #fafafa;
+  border-top: 1px solid #555;
+  border-bottom: 1px solid #000;
+  /*text-shadow: 0 1px 0 #555, 0 -1px #000;*/
+
+  background-color: #2d2d2d; /* Old browsers */
+  background-image: -moz-linear-gradient(top,  #2d2d2d 0%, #595959 100%); /* FF3.6+ */
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2d2d2d), color-stop(100%,#595959)); /* Chrome,Safari4+ */
+  background-image: -webkit-linear-gradient(top,  #2d2d2d 0%,#595959 100%); /* Chrome10+,Safari5.1+ */
+  background-image: -o-linear-gradient(top,  #2d2d2d 0%,#595959 100%); /* Opera 11.10+ */
+  background-image: -ms-linear-gradient(top,  #2d2d2d 0%,#595959 100%); /* IE10+ */
+  background-image: linear-gradient(to bottom,  #2d2d2d 0%,#595959 100%); /* W3C */
+}
+
+h2 { 
+  margin:0; 
+  padding:0; 
+}
+
+fieldset {
+  
+  margin:0; 
+  margin-bottom:1em;
+  padding:0;
+  border:0; 
+
+  text-align:center;  
+}
+
+legend {
+  display:block;
+
+  margin-top:0; 
+  margin-bottom:1em; 
+  padding:1em;
+  
+  font-size:1.3em;
+}
+
+
+div#dynamo_container { 
+  width:100%;
+  text-align:center;
+};
+
+div#admin_config {
+  overflow:auto;
+}
+
+div#admin_config div#admin_button {
+  position:absolute; 
+  top:2px;
+  right:2px;
+  font-size:0.9em;
+}
+
+div#admin_config div#admin_panel {
+  width:auto;
+  display:block;
+
+  margin:0 auto;
+  padding: 2px 4px;
+}
+
+
+div#admin_config div#admin_panel div {
+  display:block;
+}
+
+
+div#connectivity {
+  position:fixed;
+  bottom:2px;
+  left:2px;
+  z-index:1000;
+  padding:2px 10px;
+  opacity: '0.3';
+  color: "white";
+  background-color:"#767f23";
+}
+
+
+div.question {
+  margin:0 5%;
+}
+
+div.instructions {
+  font-style:italic;
+  padding: 4px 0;
+}
+
+/*---- CSS for InputGroupTemplate ----*/
+div.label_and_input {  
+
+  /*margin-left: 20px*/
+
+
+  font-size:1em;
+
+  /* From Bootstrap */
+  display: inline-block;
+  *display: inline;
+  /* IE7 inline-block hack */
+
+  *zoom: 1;
+  padding: 4px 12px;
+  margin-bottom: 0;
+  /*font-size: 14px;*/
+  line-height: 20px;
+  /*text-align: center;*/
+  text-align:left;
+  vertical-align: middle;
+  cursor: pointer;
+  color: #333333;
+  /*text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);*/
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #e6e6e6;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  border: 1px solid #bbbbbb;
+  *border: 0;
+  border-bottom-color: #a2a2a2;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  *margin-left: .3em;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+
+  /* .btn-large */
+  padding: 11px 19px;
+  font-size: 17.5px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  border-color: #c5c5c5;
+  border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
+
+  /*.btn-block*/
+  display: block;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+}
+
+.label_and_input input {
+  margin:0px;
+  vertical-align:middle;
+  width:16px;
+  margin-left:15px;
+  line-height: normal;
+  vertical-align: middle;
+}
+.label_and_input label {
+  margin:0px;
+  vertical-align:middle;
+  width:80%;
+  margin-left:10px;
+  display: inline-block;
+}
+
+.btn {
+
+  /* From Bootstrap */
+  display: inline-block;
+  *display: inline;
+  /* IE7 inline-block hack */
+
+  *zoom: 1;
+  padding: 4px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  color: #333333;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #e6e6e6;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  border: 1px solid #bbbbbb;
+  *border: 0;
+  border-bottom-color: #a2a2a2;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  *margin-left: .3em;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+}
+
+.label_and_input + .label_and_input {
+  margin-top: 5px;
+}
+
+.btn-large {
+  padding: 11px 19px;
+  font-size: 17.5px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+div.label_and_input:hover, div.hasSelectedInput { 
+/*  color:white;
+  background-color: #1e497c;*/
+  color: #333333;
+  text-decoration: none;
+  background-position: 0 -15px;
+  -webkit-transition: background-position 0.1s linear;
+  -moz-transition: background-position 0.1s linear;
+  -o-transition: background-position 0.1s linear;
+  transition: background-position 0.1s linear;
+  background-color: #e6e6e6;
+  *background-color: #d9d9d9;
+}
+
+.btn-toolbar {
+  font-size: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.current_value {
+  width:30%;
+  height:52px;
+  line-height:52px;
+  font-size:38px;
+  margin:0 auto;
+  text-align:center;
+  color:#2d2d2d;
+  font-weight: 900;
+}
+
+.end_left, .end_right {
+  color:#555;
+  font-size: 24px;
+  line-height: 32px;
+  height:32px;
+  font-weight: 500;
+}
+
+.content {
+  padding: 15px 0px 15px 0px;
+  /*from .lead*/
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  text-align:left;
+}
+
+.pager {
+  height: 50px;
+  margin: 20px 0;
+  text-align: center;
+  *zoom: 1;
+}
+
+.pager:before,
+.pager:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.pager:after {
+  clear: both;
+}
+.pager button {
+  font-size: 32px;
+  height: 54px;
+  line-height: 43px;
+  display: inline;
+  color: #08C;
+}
+.pager button {
+  /*margin: 20px 0;*/
+  display: inline-block;
+  padding: 5px 25px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+}
+.pager button:hover {
+  text-decoration: none;
+  color: #005580;
+  background-color: #f5f5f5;
+}
+.pager .next > button {
+  float: right;
+}
+.pager .previous > a,
+.pager .previous > span {
+  float: left;
+}

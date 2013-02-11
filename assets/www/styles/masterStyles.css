@@ -1,0 +1,216 @@
+/*h2
+{
+  text-align: center;
+  color: white;
+}
+th
+{
+  font-size: larger;
+  font-weight: bold;
+}
+
+
+body {font-family:Arial, Helvetica, sans-serif;}
+
+body, html {
+  padding:0;
+  color:#000;
+  background:transparent;
+  background-image:url('http://cbits.northwestern.edu/images/bg.jpg');
+}
+
+
+hr
+{
+  width: 80%;margin:2em;
+}
+.vldMsg, #validationMessagesContainer
+{
+  color: red;
+}
+.nonKey
+{
+  width: 300px;
+}
+#availableXElementsContainer {
+  float:left;
+  min-width: 300px;
+  padding:1em;
+  width: 25%;
+  color:white;
+  font-size:.8em;
+
+}
+
+
+#availableXElementsContainer h3 { margin:0; -moz-border-radius: 5px;  border-radius: 5px; background-color:#483d8b; padding:.5em 1em; text-align:center;}
+#availableXElementsContainer ul {padding:0; margin:0; list-style:none;}
+#availableXElementsContainer li {padding-left:1em; margin:0; list-style:none;}
+
+#availableXElementsContainer a {color:#FE9D9D;}
+
+
+#singleXElementContainer {
+  -moz-border-radius: 5px;  border-radius:5px;
+  padding:1em;
+  float:right;
+  min-width: 400px;
+  width:70%;
+  background:#c9c;
+}
+#tblXElements.nonKey
+{
+  width:200px;
+}
+
+#header
+{
+  text-align:center;
+  font-size: 40px;
+  color:white;
+  height: 40px;
+}
+#footer
+{
+  clear:both;
+  text-align:center;
+  font-size: 10px;
+  height:20px ;
+  color:white;
+}
+
+h1,h2,h3,h4,h5,h6 {margin:0;} 
+
+*/
+
+/* To Prevent the drop-down creation list from not being seen: 
+#XElementCreationTasks li {
+    color:white;
+    background-color:black;
+     -moz-border-radius: 5px;  border-radius:5px;
+}
+
+a.XElementCreationTask {
+ color:white;
+    background-color:black;
+     -moz-border-radius: 5px;  border-radius:5px;
+    font-weight:bold; padding:.5em;
+
+}*/
+
+
+/*** Error styling ***/
+table.errTable {
+}
+th.errHead {
+}
+tr.errRow {
+  background-color: LightGray;
+  border-bottom: 1px;
+}
+td.errNum {
+  color: Black;
+}
+td.errSrc {
+  color: Brown;
+}
+td.errKey {
+  color: Purple;
+}
+td.errMsg {
+  color: Red;
+}
+
+
+/*** Other styling ***/
+
+
+div#ajax_status {
+  position: fixed;
+  top:50px;
+  right:50px;
+  min-height: 20px;
+  min-width: 50px;
+  padding: 5px 10px;  
+  background: transparent;
+  z-index: 100000000;
+  font-weight: bold;
+}
+
+div#ajax_status a{
+  color:white;
+  text-decoration:none;
+}
+
+div#ajax_status a:hover{
+  text-decoration:underline;
+}
+
+div#ajax_status.processing_ajax {
+  color:black;
+  background-color:#D0D0D0; /*a light gray*/
+}
+
+div#ajax_status.successful_ajax {
+  color:white;
+  background-color:#00E000; /*a brightish green*/
+}
+
+div#ajax_status.failed_ajax {
+  color:white;
+  background-color:#E00000; /*a brightish red*/
+} 
+
+
+
+
+
+input.contentTypeInput {border:0; margin:0; font-size:.8em; margin-top:-.25em;}
+
+  a {text-decoration:none; color:#FB5555; font-weight:bold;}
+
+
+ul#xelementsTypeList {text-decoration:none; list-style-image: none; padding:0; margin:0; padding-bottom:1em; font-size:2em; }
+
+
+.select_guid {font-size:1em; cursor:text;}
+
+
+
+#mainNav a {display:block; color:white !important;
+     background-color:#cB2525;
+     -moz-border-radius: 5px;  
+     border-radius:5px;
+    font-weight:bold; 
+    padding:.5em; margin-bottom:.25em; float:left; margin-right:.5em;}
+
+#mainNav a:hover {background-color: red;}
+
+
+#availableXElementsContentInner a { white-space:normal !important; height: auto; padding:1px 2px; width:80%; } 
+#availableXElementsContentInner li > ins { vertical-align:top; }
+#availableXElementsContentInner .jstree-hovered, #availableXElementsContentInner .jstree-clicked { border:0; }
+
+
+.builtDocs td,tr,table {margin:0; border-collapse:collapse;}
+.docs_text {width:30%;padding:0;margin:0;border-collapse:collapse; font-family:monospace; font-size:1.6em;}
+.code_text {width:65%;padding:0; margin:0;border-collapse:collapse; font-size:1.4em;}
+
+a.xelType  { display:block; color:white !important;
+    background-color:#1e497c;
+     -moz-border-radius: 5px;  border-radius:5px;
+    font-weight:bold; padding:.5em; margin-bottom:.25em;}
+
+a.xelType:hover {background-color: blue;}
+
+a {color:purple; text-decoration:none; font-weight:normal;}
+a:hover {text-decoration:underline;}
+
+body {font-family:sans-serif; font-size:.8em;}
+
+a.button  { display:block; color:white !important;
+    background-color:#1e497c;
+     -moz-border-radius: 5px;  border-radius:5px;
+    font-weight:bold; padding:.5em; margin-bottom:.25em;}
+
+a.button:hover {background-color: blue;}

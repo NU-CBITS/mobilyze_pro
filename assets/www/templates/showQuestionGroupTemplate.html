@@ -1,0 +1,9 @@
+<!-- showQuestionGroupTemplate.html -->
+<script id="showQuestionGroupTemplate" type="text/underscore_template">
+  <h1><span class="title"><%=title%></span></h1>
+  <% if (directions) { %>
+		<h2>Directions:</h2>
+		<div id="directions"><%= directions %></div>
+  <% }; %> 	
+  <div id="questions"></div>
+</script>

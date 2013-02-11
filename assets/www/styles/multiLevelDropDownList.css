@@ -1,0 +1,105 @@
+.ddsmoothmenu {
+    width: 100%;
+    /*background-image: url(http://4.bp.blogspot.com/-9heg7lW39G0/T8YxHv0LaQI/AAAAAAAAB1E/BKwgK6KrM_0/s1600/menu-bg.png);*/
+    vertical-align: middle;
+    height: 33px;
+    font-family: Verdana;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.ddsmoothmenu ul {
+    z-index: 100;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.ddsmoothmenu ul li {
+    position: relative;
+    display: inline;
+    float: left;
+}
+
+.ddsmoothmenu ul li a {
+    display: block;
+    color: white;
+    padding: 8px 10px;
+    border-right: 1px solid #778;
+    color: #666666;
+    text-decoration: none;
+    /*background-image: url(http://4.bp.blogspot.com/-9heg7lW39G0/T8YxHv0LaQI/AAAAAAAAB1E/BKwgK6KrM_0/s1600/menu-bg.png);*/
+}
+
+* html .ddsmoothmenu ul li a {
+    display: inline-block;
+}
+
+.ddsmoothmenu ul li a:link, .ddsmoothmenu ul li a:visited {
+    color: white;
+}
+
+.ddsmoothmenu ul li a.selected {
+    background: black;
+    color: white;
+}
+
+.ddsmoothmenu ul li a:hover {
+    background: black;
+    color: white;
+}
+
+.ddsmoothmenu ul li ul {
+    position: absolute;
+    left: 0;
+    display: none;
+    visibility: hidden;
+}
+
+.ddsmoothmenu ul li ul li {
+    display: list-item;
+    float: none;
+}
+
+.ddsmoothmenu ul li ul li ul {
+    top: 0;
+}
+
+.ddsmoothmenu ul li ul li a {
+    font: normal 13px Verdana;
+    width: 160px;
+    padding: 5px;
+    margin: 0;
+    border-top-width: 0;
+    border-bottom: 1px solid gray;
+    background-color: LightSlateGray;
+}
+
+* html .ddsmoothmenu {
+    height: 1%;
+}
+
+.downarrowclass {
+    position: absolute;
+    top: 12px;
+    right: 7px;
+}
+
+.rightarrowclass {
+    position: absolute;
+    top: 6px;
+    right: 5px;
+}
+
+.ddshadow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    background: silver;
+}
+
+.toplevelshadow {
+    opacity: 0.8;
+} 

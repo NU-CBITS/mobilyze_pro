@@ -1,0 +1,12 @@
+<script id="takeAssessmentTemplate" type="text/underscore_template">
+  <h1><%= title %></h1>
+  <div class="start"><%= start_content %></div>
+  <div class="question"></div>
+  <% if (!no_navigation)  { %>
+    <div class="assessment navigation">
+      <button class="btn previous">previous</button>
+      <button class="btn next">next</button>
+    </div>
+  <% }; %>
+  <div class="end"><%= end_content %></div>
+</script>
