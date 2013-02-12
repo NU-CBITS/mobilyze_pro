@@ -28,6 +28,7 @@ QuestionGroupModel = Dynamo.XelementClass.extend({
     };
     
     question_models = _.map( question_ids, function(id) { return QUESTIONS.get(id) });
+
     self.questions = new QuestionCollection(question_models);
     this.questions.on('add',    this.setUnsavedChanges);
     this.questions.on('remove', this.setUnsavedChanges);

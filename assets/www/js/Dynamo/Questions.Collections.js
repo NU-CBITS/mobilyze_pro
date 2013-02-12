@@ -1,8 +1,8 @@
 //Before this Dynamo Mantle File can be used, the following must be defined:
 //
-// Dynamo.Mantle.Questions
-
-// Dynamo.Collections.js
+//  Before this Dynamo Mantle File can be used, the following must be defined:
+//    Core.Collections.js
+//    Questions.Models.js
 
   QuestionGroupCollection = Dynamo.Collection.extend({
 
