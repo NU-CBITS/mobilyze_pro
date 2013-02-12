@@ -24,6 +24,68 @@
 templates = {};
 
 
+
+
+// 
+// Fundamental Type Views
+// 
+
+// showArrayView
+// a view (simplified in comparison to Backbone.View),
+// which will perform only the very core functions of rendering an Array (instead of a full Backbone.Model instance) 
+// requires the following options:
+// container: DOM element string identifier, inside of which showArrayView will render;
+// getArrayFn: function which, when called, will return the array to render
+// elementTemplate: underscore.js template string which will be passed each array element successively 
+ShowArrayView = Dynamo.ShowArrayView = (function() {
+  
+  function showArrayView(options) {
+    options = options || {};
+    this.container = options.container || "<div></div>";
+    this.$container = $(this.container);
+    this.el = options.el || '<div class="array-view"></div>';
+    this.$container.prepend(this.el);
+    this.$el = $(this.container).find('div.array-view:first');
+    this.getArrayFn = options.getArrayFn;
+    this.elementTemplate = options.elementTemplate;
+    this.onElementClick = options.onElementClick;
+    this.title = options.title; 
+  };
+  
+  showArrayView.prototype._elementTemplate = function(data, settings) {
+    if (!this.compiled_template) {
+      if (!this.elementTemplate) { throw new Error("should define Element Template for showArrayView") }
+      this.compiled_template = _.template(this.elementTemplate);
+    };
+    return this.compiled_template(data, settings);
+  },
+
+  showArrayView.prototype.remove = function() {
+    this.$el.remove();
+  }
+
+  showArrayView.prototype.render = function() {
+    var self = this, fields;
+    this.$el.empty();
+    if (this.title) { this.$el.append("<h2>"+this.title+"</h2>")}
+
+    _.each(this.getArrayFn(), function(event) {
+      fields = event.get_fields_as_object();
+      fields.cid = event.cid;
+      fields.id = event.id;
+      self.$el.append( self._elementTemplate({item: fields}) );
+    });
+
+    $('div.list-item', this.$el).on('click', this.onElementClick);
+  
+  };
+  
+  return showArrayView
+
+}) ();
+
+
+
 //
 //
 //  InputViews
@@ -551,25 +613,30 @@ Dynamo.ChooseOneXelementFromCollectionView = Backbone.View.extend({
     this.trigger("element:chosen");
   },
   chooseXelement: function(clickEvent) {
-    var current_guid = clickEvent.currentTarget.dataset.guid;
-    this.chosen_element = this.collection.get(current_guid);
+    var id = clickEvent.currentTarget.dataset.cid;
+    this.chosen_element = this.collection.get(id);
     this.trigger("element:chosen");
   },
   modelHTML: function(m) {
     return t.span( m.get_field_value(this.chooseOn) );
   },
-  template: function(data, settings) {
-    if (!this._template) { this._template = templates.choose_one_xelement };
-    return _.template(this._template, data, settings)
+  _template: function(data, settings) {
+    if (!this.compiled_template) {
+      if (!this.template) {
+        this.template = this.options.template || templates.choose_one_xelement;
+      };
+      this.compiled_template = _.template(this.template)
+    };
+
+    return this.compiled_template(data, settings);
   },
   render: function() {
     var self = this;
-    var elements = this.collection.map(function(m) { return { id: m.id, html: self.modelHTML(m) }  });
+    var elements = this.collection.map(function(m) { return { id: m.id, cid: m.cid, html: self.modelHTML(m) }  });
     this.$el.html(
-      this.template({
+      this._template({
         collection_name: (this.options.collection_name || this.collection.prettyModelName()),
         elements: elements,
-
         canCreateNew: this.options.canCreateNew,
         xelement_type: this.options.xelement_type,
         element_pretty_name: this.options.element_pretty_name
@@ -714,7 +781,6 @@ Dynamo.BaseUnitaryXelementView = Dynamo.SaveableModelView.extend({
 //  - addAtIndexHandler: callback function, passed the click event as an argument,
 //    responsible for handling the addition of a model to the collection at the appropriate index.
 //    the index is available as clickEvent.srcElement.
-//    Default behavior is to called when one of the
 Dynamo.ManageCollectionView = Backbone.View.extend({
 
   initialize: function() {
@@ -742,7 +808,6 @@ Dynamo.ManageCollectionView = Backbone.View.extend({
   //    collection (but that are not already a part of it) can also be
   //    added to the collection.
   //
-  //    In this case,
   addAtIndexHandler: function(clickEvent) {
 
     if (this.options.addAtIndexHandler) { return this.options.addAtIndexHandler() };
@@ -799,9 +864,9 @@ Dynamo.ManageCollectionView = Backbone.View.extend({
 
   },
 
-  //Default implementation of addNewAtIndex;
-  //called by default addAtIndexHandler can be overridden
-  //by passing in an addNewAtIndex method as an option.
+  //  Default implementation of addNewAtIndex;
+  //  called by default addAtIndexHandler can be overridden
+  //  by passing in an addNewAtIndex method as an option.
   addNewAtIndex: function(element_index) {
     console.log('inserting '+ this.collection.prettyModelName()+' - at location: '+ element_index);
     this.collection.add({}, {at: element_index});
@@ -813,18 +878,18 @@ Dynamo.ManageCollectionView = Backbone.View.extend({
     this.collection.add(element, { at: element_index });
   },
 
-  //getExistingAddablesCollection is an abstract method
-  //meant to be passed in as an option on instantiation or overridden
-  //getExistingAddablesCollection is called by 'chooseExistingToAddAtIndex',
-  //and should return either a Dynamo.Collection or
-  //a Backbone.Collection where:
-  //1)  it's models are the same model class accepted by ManageCollectionView's collection.
-  //2)  it responds to the property 'codeCollectionName', returning a string
-  //3)  it responds to the function 'prettyModelName', returning a string
+  //  getExistingAddablesCollection is an abstract method
+  //  meant to be passed in as an option on instantiation or overridden
+  //  getExistingAddablesCollection is called by 'chooseExistingToAddAtIndex',
+  //  and should return either a Dynamo.Collection or
+  //  A Backbone.Collection where:
+  //    1)  it's models are the same model class accepted by ManageCollectionView's collection.
+  //    2)  it responds to the property 'codeCollectionName', returning a string
+  //    3)  it responds to the function 'prettyModelName', returning a string
   //
-  //Alternatively, you could perform more complicated logic
-  //by overriding the 'chooseExistingToAddAtIndex' or
-  //the subsequent call to 'onChoosingModelToAdd' methods to your own ends.
+  //  Alternatively, you could perform more complicated logic
+  //  by overriding the 'chooseExistingToAddAtIndex' or
+  //  the subsequent call to 'onChoosingModelToAdd' methods to your own ends.
   getExistingAddablesCollection: function() {
 
     if (this.options.getExistingAddablesCollection) {
@@ -843,7 +908,6 @@ Dynamo.ManageCollectionView = Backbone.View.extend({
       return this.options.chooseExistingToAddAtIndex(element_index, this);
     }
 
-
     var self = this,
         $popup,
         existingAddables = self.getExistingAddablesCollection();
@@ -855,6 +919,7 @@ Dynamo.ManageCollectionView = Backbone.View.extend({
         collection_name: existingAddables.codeCollectionName,
         collection: existingAddables
       }
+
     if (this.options.chooseExistingViewOptions) {
       chooseExistingViewOptions = _.extend(chooseExistingViewOptions, this.options.chooseExistingViewOptions)
     }
@@ -919,18 +984,26 @@ Dynamo.ManageCollectionView = Backbone.View.extend({
     this.collection.remove(this.collection.at(element_index));
   },
 
-  template: function(data, settings) {
-    if (!this._template) {
-      this._template = templates.manage_collection_widget;
-    }
-    return _.template(this._template, data, settings);
+  _template: function(data, settings) {
+    if (!this.compiled_template) {
+      if (!this.template) {
+        this.template = this.options.template || templates.manage_collection_widget;
+      };
+      this.compiled_template = _.template(this.template)
+    };
+
+    return this.compiled_template(data, settings);
   },
 
-  elementTemplate: function(data, settings) {
-    if (!this._elementTemplate) {
-      this._elementTemplate = templates.collection_widget_element;
-    }
-    return _.template(this._elementTemplate, data, settings);
+  _elementTemplate: function(data, settings) {
+    if (!this.compiledElementTemplate) {
+      if (!this.elementTemplate) {
+        this.elementTemplate = this.options.elementTemplate || templates.collection_widget_element;
+      }
+    };
+    this.compiledElementTemplate = _.template(this.elementTemplate)
+
+    return this.compiledElementTemplate(data, settings);
   },
 
   viewClassOr: function(model) {
@@ -951,7 +1024,7 @@ Dynamo.ManageCollectionView = Backbone.View.extend({
         view_options,
         view;
 
-    this.$el.html(this.template({
+    this.$el.html(this._template({
       start_content: this.start_content,
       element_code_name: this.collection.codeModelName(),
       element_pretty_name: this.collection.prettyModelName(),
@@ -965,7 +1038,7 @@ Dynamo.ManageCollectionView = Backbone.View.extend({
     self.collection.each(function(model, index) {
 
       $elements.append(
-        self.elementTemplate({
+        self._elementTemplate({
           index: index,
           display: self.display,
           element_code_name: self.collection.codeModelName(),
@@ -1043,11 +1116,15 @@ Dynamo.ShowGroupView = Dynamo.BaseUnitaryXelementView.extend({
     this.subViews = [];
   },
 
-  template: function(data, settings) {
-    if (!this._template) {
-      this._template = templates.show_group;
+  _template: function(data, settings) {
+    if (!this.compiled_template) {
+      if (!this.template) {
+        this.template = this.options.template || templates.show_group;
+      };
+      this.compiled_template = _.template(this.template)
     };
-    return _.template(this._template, data, settings);
+
+    return this.compiled_template(data, settings);
   },
 
   render: function() {
@@ -1118,11 +1195,15 @@ Dynamo.EditGroupView = Dynamo.BaseUnitaryXelementView.extend({
     this.subViews = [];
   },
 
-  template: function(data, settings) {
-    if (!this._template) {
-      this._template = templates.show_group;
+  _template: function(data, settings) {
+    if (!this.compiled_template) {
+      if (!this.template) {
+        this.template = this.options.template || templates.edit_group;
+      };
+      this.compiled_template = _.template(this.template)
     };
-    return _.template(this._template, data, settings);
+
+    return this.compiled_template(data, settings);
   },
 
   render: function() {
@@ -1223,12 +1304,14 @@ Dynamo.ShowUserView = Dynamo.BaseUnitaryXelementView.extend({
     }
   },
 
-  template: function(data, settings) {
-    if (!this._template) {
-      this._template = templates.show_user;
+  _template: function(data, settings) {
+    if (!this.compiled_template) {
+      if (!this.template) { this.template = this.options.template || templates.show_user; }
+      this.compiled_template = _.template(this.template);
     };
-    return _.template(this._template, data, settings);
+    return this.compiled_template(data, settings);
   },
+
 
   render: function() {
     console.log('in ShowUserView render');
@@ -1238,7 +1321,7 @@ Dynamo.ShowUserView = Dynamo.BaseUnitaryXelementView.extend({
 
     self = this;
 
-    self.$el.html( self.template({
+    self.$el.html( self._template({
         position: this.position,
         user: this.model.toJSON()
       })
@@ -1268,11 +1351,12 @@ Dynamo.EditUserView = Dynamo.BaseUnitaryXelementView.extend({
     }
   },
 
-  template: function(data, settings) {
-    if (!this._template) {
-      this._template = templates.edit_user;
+  _template: function(data, settings) {
+    if (!this.compiled_template) {
+      if (!this.template) { this.template = this.options.template || templates.edit_user; }
+      this.compiled_template = _.template(this.template);
     };
-    return _.template(this._template, data, settings);
+    return this.compiled_template(data, settings);
   },
 
   render: function() {
@@ -1283,7 +1367,7 @@ Dynamo.EditUserView = Dynamo.BaseUnitaryXelementView.extend({
     console.log('in ShowUserView render');
 
     self = this;
-    self.$el.html( self.template({
+    self.$el.html( self._template({
         position: this.position,
         user: this.model.toJSON()
       })
