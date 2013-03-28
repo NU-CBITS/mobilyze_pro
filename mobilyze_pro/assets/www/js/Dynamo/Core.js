@@ -267,10 +267,6 @@ addSessionVarsToUrl = function(url) {
 Dynamo._previousSync = Backbone.sync;
 
 Dynamo.AuthenticatedSync = function (method, model, options) {
-  // CJK mods
-  console.log("SYNC-" + method + ": " + JSON.stringify(model) + " --> " + JSON.stringify(options));
-  // End CJK mods
-
   // Default options, unless specified.
   options || (options = {});
   console.log("");
