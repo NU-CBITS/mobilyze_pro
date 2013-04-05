@@ -530,6 +530,12 @@
 
   }; //dualsync
 
-  Backbone.sync = dualsync;
+
+  // If dualsync functionality is actually desired:
+  // Backbone.sync = dualsync;
+  // Instead, as of ~ April 2013, we are no longer dualsync-ing. 
+  // Instead, we will be passing off calls to the local PurpleRobot server, 
+  // so we only need localsync:
+  Backbone.sync = localsync;
 
 }).call(this);

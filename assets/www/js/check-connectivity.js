@@ -18,7 +18,7 @@ SERVER_CONNECTIVITY = {
   currentTimeoutID: null,
   el: null,
   is: false,
-  was: (localStorage.getItem("Connectivity") == "true"),
+  was: false, // (localStorage.getItem("Connectivity") == "true"),
   pollPeriodically: false,
   min_period: 5000, //i.e. check no more often than every 5s
   max_online_period: 30*1000, //i.e. once online, increase period to no more than 30s
