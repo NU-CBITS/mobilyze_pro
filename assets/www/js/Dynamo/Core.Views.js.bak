@@ -457,7 +457,7 @@ Dynamo.InputSliderView = Backbone.View.extend(
             "<div class='end_right' style='float:left;'>"+ this.options.low_end_text +"</div>" +
             "<div class='end_left' style='float:right;'>"+ this.options.high_end_text +"</div>" +
           "</div>" +
-        "<div class='slider' style='width:80%;margin-left:10%;margin-right:10%; margin-top:1em; height:60px;'></div>" +
+        "<div class='slider' style='width:80%;margin-left:10%;margin-right:10%; margin-top:2em; height:60px;'></div>" +
         "<div style='height:10px;'></div>");
       //make the slider;
       $slider = this.$el.find("div.slider:first");

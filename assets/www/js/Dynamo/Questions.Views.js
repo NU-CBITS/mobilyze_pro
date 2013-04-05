@@ -662,7 +662,6 @@ TakeAssessmentView = Dynamo.SaveableModelView.extend({
       });
 
       return;
-
     }
 
     //or pass in sufficient options to define a new data object,
