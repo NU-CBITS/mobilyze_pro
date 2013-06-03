@@ -47,7 +47,7 @@ DataCollection = Dynamo.DataCollection = Dynamo.Collection.extend({
     this.options = options || {};
   },
 
-  group_id:function() {
+  group_id: function() {
     return this.options.group_id
   },
 

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 
     <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="styles/normalize.css" />
     <link rel="stylesheet" type="text/css" href="styles/masterStyles.css" /> 
     <link rel="stylesheet" type="text/css" href="styles/jquery-ui.css" />
     <link rel="stylesheet" type="text/css" href="styles/assessment_taker.css" />
@@ -51,9 +52,8 @@
       <% if (!no_navigation)  { %>
 
       <div class="assessment navigation pager">
-        <button class="previous">
-          <i class="icon-backward"></i> Back</button>
-        <button class="next">Next <i class="icon-forward"></i></button>
+        <button class="previous">&larr;</button>
+        <button class="next">Next &rarr;</button>
       </div>
 
       <% }; %>
@@ -62,19 +62,21 @@
 
     <!-- Must come before dualstorage due to Sync override! -->
     <script type="text/javascript" src="js/Dynamo/Core.js "></script>
+    <!-- dualstorage is now being used just as localstorage - see comment at the end of it:  -->
     <script type="text/javascript" src="js/vendor/backbone.dualstorage.CUSTOM.js"></script>
-    <script type="text/javascript"> 
-      Dynamo.TriremeURL = "https://trireme.northwestern.edu"; 
-    </script>
+    <script type="text/javascript"> Dynamo.TriremeURL = "https://trireme.northwestern.edu"; </script>
     <script type="text/javascript" src="js/Dynamo/Core.Models.js"></script>
     <script type="text/javascript" src="js/Dynamo/Core.Collections.js"></script>
     <script type="text/javascript" src="js/Dynamo/Core.Views.js"></script>
-    <script type="text/javascript">
-      Dynamo.XelementClass = Dynamo.UnitaryXelement; // Initialize Dynamo Core
-    </script>
+    <script type="text/javascript"> Dynamo.XelementClass = Dynamo.UnitaryXelement; </script>
     <script type="text/javascript" src="js/Dynamo/Questions.Models.js"></script>
     <script type="text/javascript" src="js/Dynamo/Questions.Collections.js"></script>
     <script type="text/javascript" src="js/Dynamo/Questions.Views.js"></script>
+
+    <script type="text/javascript" src="js/PurpleRobotClient/purple-robot-client.js"></script>
+    <script type="text/javascript" src="js/PurpleRobotClient/default-triggers.js"></script>
+
+    <script type="text/javascript" src="js/purple-robot-sync.js"></script>
 
     <!-- Additional Scripts of Ours -->
     <script type="text/javascript" src="js/check-connectivity.js"></script>
@@ -84,12 +86,31 @@
     <script type="text/javascript" src="Questions.js"></script>
     <script type="text/javascript" src="QuestionGroups.js"></script>
     <script src="phonegap.js"></script>
-    
+
 
 <script>
 
 // GLOBALS
-ENVIRONMENT = "mobile"  //mobile or browser
+// 
+// 
+
+function isPhoneGap() {
+    return (cordova || PhoneGap || phonegap) 
+    && /^file:\/{3}[^\/]/i.test(window.location.href) 
+    && /ios|iphone|ipod|ipad|android/i.test(navigator.userAgent);
+}
+
+
+function currentEnvironment(){
+if ( isPhoneGap() ) {
+    return "phonegap"
+} else {
+    return "browser"
+}
+};
+
+
+ENVIRONMENT = currentEnvironment();  //mobile or browser
 
 currentTestData = null;
 currentQuestionData = null;
@@ -209,7 +230,7 @@ var showAssessmentForUser = function(test, user, options) {
 //some number of random tests as specifed by 'num_rand_tests'
 //the same test should not be taken twice.
 var required_tests = ["e12b14d44b2784018f20af38f1e1aba8"];
-var num_rand_tests = 2;
+var num_rand_tests = 4;
 var num_total_tests = required_tests.length + num_rand_tests;
 var tests_taken = [];
 
@@ -259,33 +280,36 @@ function loadAssessment() {
 
 var showEndingDialog = function() {
   $('body').html(""+
-    "<h3>These are all of this session's questions.</h3>"+
+    "<div style='padding:1em;'><p><h3>These are all of this session's questions.</h3>"+
     "<h3>You can now exit the application.</h3>"+
-    "<h2>Thank you!</h2>");
+    "<h2>Thank you!</h2></p></div>");
 };
 
 function configureConnectivityCheck() {
-  SERVER_CONNECTIVITY.serverURL = Dynamo.TriremeURL;
-  SERVER_CONNECTIVITY.pollPeriodically = true;
-  SERVER_CONNECTIVITY.onReviveCallback = function() {
+
+  // Stop connectivity checking. Due to no longer desiring connectivity checking w/ Purple Robot.
+
+  // SERVER_CONNECTIVITY.serverURL = Dynamo.TriremeURL;
+  // SERVER_CONNECTIVITY.pollPeriodically = true;
+  // SERVER_CONNECTIVITY.onReviveCallback = function() {
     
-    console.log("IN ON REVIVE CALLBACK");
+  //   console.log("IN ON REVIVE CALLBACK");
 
-    if (localStorage.getItem("CurrentUserSaved") != "true") {
-      Dynamo._CurrentUser.on('sync', function() {
-        localStorage.setItem("CurrentUserSaved", "true");
-        localStorage.setItem("CurrentUser", JSON.stringify( Dynamo._CurrentUser.toJSON() ));
-      });
-      Dynamo._CurrentUser.save();
-    }
+  //   if (localStorage.getItem("CurrentUserSaved") != "true") {
+  //     Dynamo._CurrentUser.on('sync', function() {
+  //       localStorage.setItem("CurrentUserSaved", "true");
+  //       localStorage.setItem("CurrentUser", JSON.stringify( Dynamo._CurrentUser.toJSON() ));
+  //     });
+  //     Dynamo._CurrentUser.save();
+  //   }
 
-    var results = UserData.syncDirtyAndDestroyed();
-    console.log("------------------SYNC RESULTS-----------------------");
-    _.each(results, function(r) {
-      console.log(r, "" + r);
-    });
-    console.log("------------------END RESULTS------------------------");
-  };
+  //   var results = UserData.syncDirtyAndDestroyed();
+  //   console.log("------------------SYNC RESULTS-----------------------");
+  //   _.each(results, function(r) {
+  //     console.log(r, "" + r);
+  //   });
+  //   console.log("------------------END RESULTS------------------------");
+  // };
 
 };
 
@@ -312,7 +336,7 @@ function startSurveyTaker() {
   
   configureConnectivityCheck();
   // comment-in when on phone.
-  if (ENVIRONMENT == "mobile") {
+  if (ENVIRONMENT == "phonegap") {
     SERVER_CONNECTIVITY.onMobileDeviceReady();
   }
   else {
@@ -341,11 +365,17 @@ function startSurveyTaker() {
 };
 
 function onDeviceReady() { 
+  document.addEventListener("resume", onResume, false);
   startSurveyTaker(); 
 };
 
-if (ENVIRONMENT == "mobile") {
+function onResume() {
+ startSurveyTaker(); 
+}
+
+if (ENVIRONMENT == "phonegap") {
   document.addEventListener("deviceready", onDeviceReady, false);
+
 }
 else {
   // alert('Environment is '+ENVIRONMENT);

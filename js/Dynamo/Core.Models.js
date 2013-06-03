@@ -218,6 +218,15 @@ XelementRoot = Dynamo.XelementRoot = {
     };
   },
 
+  get_fields_as_object: function() {
+    var fields = {
+      id : this.id,
+      cid : this.cid
+    };
+    _.extend(fields, this.get("xel_data_values") );
+    return fields;
+  },  
+
   metacontent: function() {
 
     return this.get_field_value('metacontent_external');
@@ -229,7 +238,7 @@ XelementRoot = Dynamo.XelementRoot = {
     return Dynamo.TriremeURL+'/xelements' 
   },
 
-  viewClass: function() { return Dynamo.ShowXelementSimpleView; },  
+  viewClass: function() { return Dynamo.ShowXelementSimpleView; }
 
 };
 
@@ -798,6 +807,12 @@ Dynamo.typeToModelClass = function(xelement_type) {
     case 'question':
       return Dynamo.QuestionModel;
       break;
+    case 'guide':
+      return Dynamo.GuideModel;
+      break;
+    case 'static_html': case 'slide':
+      return Dynamo.SlideModel;
+      break;            
     default:
       throw "undefined class for xelement_type '"+xelement_type+"'";
   };
